@@ -1,0 +1,20 @@
+<template>
+  <div>
+    <div class="card w-100">
+      <div class="cadr-body">
+        <h5 class="card-title">{{ itemTitle }}</h5>
+        <p>{{ itemDescription }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    itemTitle: String,
+    itemDescription: String,
+    price: Number,
+  },
+};
+</script>
