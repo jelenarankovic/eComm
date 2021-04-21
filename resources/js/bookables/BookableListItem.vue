@@ -2,8 +2,10 @@
   <div>
     <div class="card w-100">
       <div class="cadr-body">
-        <h5 class="card-title">{{ itemTitle }}</h5>
-        <p>{{ itemDescription }}</p>
+        <router-link :to="{name: 'bookable', params:{id}}">
+          <h5 class="card-title">{{ title }}</h5>
+        </router-link>
+        <p>{{ description }}</p>
       </div>
     </div>
   </div>
@@ -12,9 +14,9 @@
 <script>
 export default {
   props: {
-    itemTitle: String,
-    itemDescription: String,
-    price: Number,
+    title: String,
+    description: String,
+    id: Number,
   },
 };
 </script>

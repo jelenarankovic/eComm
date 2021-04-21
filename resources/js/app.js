@@ -3,6 +3,9 @@ require('./bootstrap');
 import VueRouter from "vue-router";
 import router from "./routes";
 import Index from "./Index";
+import moment from "moment";
+import StarRating from "./shared/components/StarRating.vue";
+import Vue from "vue";
 
 window.Vue = require('vue').default;
 
@@ -17,6 +20,8 @@ window.Vue = require('vue').default;
 // ovo ne mora vise da postoji jer ih routes.js vidi i tamo smo ih naveli
 
 Vue.use(VueRouter);
+Vue.filter("fromNow", value => moment(value).fromNow());
+Vue.component("star-rating", StarRating);
 
 const app = new Vue({
     el: '#app',

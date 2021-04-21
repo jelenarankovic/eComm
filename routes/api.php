@@ -1,9 +1,7 @@
 <?php
 
-use App\Models\Bookable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,15 +12,26 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('bookables', function(Request $request){
-    return Bookable::all();
-});
+Route::apiResource('bookables', 'App\Http\Controllers\Api\BookableController')
+    ->only(['index','show']);
+//resource controllers - upravlja kontrolerom? idk pogledaj video
 
-Route::get('bookables/{id}', function(Request $request, $id){
-    return Bookable::findOrFail($id);
-});
+Route::get('bookables/{bookable}/availability', 
+    'App\Http\Controllers\Api\BookableAvailabilityController')
+    ->name('bookables.availability.show');
+
+Route::get('bookables/{bookable}/reviews', 
+    'App\Http\Controllers\Api\BookableReviewController')
+    ->name('bookables.reviews.show');
+
+Route::apiResource('reviews', 
+    'App\Http\Controllers\Api\ReviewController')->only(['show', 'store']);
+
+Route::get('booking-by-review/{reviewKey}', 
+    'App\Http\Controllers\Api\BookingByReviewController')
+    ->name('booking.by-review.show');
+

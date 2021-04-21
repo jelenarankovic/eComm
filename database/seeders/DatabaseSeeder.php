@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
     {
        $this->call(BookablesTableSeeder::class);
        //ova BookablesTableSeeder kalasa je na istom nivou kao DBSeeder pa nmr da se importuje
+       $this->call(BookingsTableSeeder::class);
+       $this->call(ReviewsTableSeeder::class);
     }
 }
