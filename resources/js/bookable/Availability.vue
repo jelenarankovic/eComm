@@ -14,12 +14,10 @@
           class="form-control form-control-sm"
           placeholder="Start date"
           v-model="from"
+          @keyup.enter="check"
           :class="[{ 'is-invalid': errorFor('from') }]"
         />
-
-        <!-- invalid ukoliko polje from ima greske -->
-       <v-errors :errors="errorFor('from')"></v-errors>
-
+        <v-errors :errors="errorFor('from')"></v-errors>
       </div>
       <div class="form-group col-md-6">
         <label for="to">To</label>
@@ -32,18 +30,15 @@
           @keyup.enter="check"
           :class="[{ 'is-invalid': errorFor('to') }]"
         />
-
         <v-errors :errors="errorFor('to')"></v-errors>
-
       </div>
     </div>
     <button
       class="btn btn-secondary btn-block"
-      v-on:click="check"
-      v-on:keyup.enter="check"
+      @click="check"
       :disabled="loading"
     >
-      Check
+      Check!
     </button>
   </div>
 </template>
@@ -51,14 +46,11 @@
 <script>
 import { is422 } from "./../shared/utils/response";
 import validationErrors from "./../shared/mixins/validationErrors";
-
 export default {
-  mixins:[ validationErrors ],
-
+  mixins: [validationErrors],
   props: {
-    bookableId: [String, Number],
+    bookableId: String,
   },
-
   data() {
     return {
       from: null,
@@ -67,11 +59,11 @@ export default {
       status: null,
     };
   },
+
   methods: {
     check() {
       this.loading = true;
       this.errors = null;
-
       axios
         .get(
           `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
@@ -88,7 +80,6 @@ export default {
         .then(() => (this.loading = false));
     },
   },
-
   computed: {
     hasErrors() {
       return 422 === this.status && this.errors !== null;
@@ -97,17 +88,23 @@ export default {
       return 200 === this.status;
     },
     noAvailability() {
-      return 400 === this.status;
+      return 404 === this.status;
     },
   },
 };
 </script>
-
 <style scoped>
 label {
   font-size: 0.7rem;
   text-transform: uppercase;
   color: gray;
   font-weight: bolder;
+}
+.is-invalid {
+  border-color: #b22222;
+  background-image: none;
+}
+.invalid-feedback {
+  color: #b22222;
 }
 </style>
