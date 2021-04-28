@@ -1,92 +1,113 @@
 <template>
-    <div>
-         <h6 class="text-uppercase text-secondary font-weight-bolder">
-            Check Availability
-            <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
-            <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
-        </h6>
-        <div class="form-row">
-            <div class="form-group col-md-6 ">
-                <label for="from">From</label>
-                <input type="text" 
-                    name="from" 
-                    class="form-control form-control-sm" 
-                    placeholder="Start date"
-                    v-model="from"
-                    :class="[{'is-invalid':this.errorFor('from')}]"> <!-- invalid ukoliko polje from ima greske -->
-                <div class="invalid-feedback" v-for="(error,index) in this.errorFor('from')" :key="'from'+index">{{error}}</div>
-            
-            </div>
-            <div class="form-group col-md-6 ">
-                <label for="to">To</label>
-                <input type="text" 
-                    name="to" 
-                    class="form-control form-control-sm" 
-                    placeholder="End date"
-                    v-model="to"
-                    :class="[{'is-invalid':this.errorFor('to')}]">
-                <div class="invalid-feedback" v-for="(error,index) in this.errorFor('to')" :key="'to'+index">{{error}}</div>
-            </div>
-        </div>
-        <button class="btn btn-secondary btn-block" v-on:click="check"
-         v-on:keyup.enter="check" :disabled="loading">Check</button>
+  <div>
+    <h6 class="text-uppercase text-secondary font-weight-bolder">
+      Check Availability
+      <span v-if="noAvailability" class="text-danger">(NOT AVAILABLE)</span>
+      <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+    </h6>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="from">From</label>
+        <input
+          type="text"
+          name="from"
+          class="form-control form-control-sm"
+          placeholder="Start date"
+          v-model="from"
+          :class="[{ 'is-invalid': errorFor('from') }]"
+        />
+
+        <!-- invalid ukoliko polje from ima greske -->
+       <v-errors :errors="errorFor('from')"></v-errors>
+
+      </div>
+      <div class="form-group col-md-6">
+        <label for="to">To</label>
+        <input
+          type="text"
+          name="to"
+          class="form-control form-control-sm"
+          placeholder="End date"
+          v-model="to"
+          @keyup.enter="check"
+          :class="[{ 'is-invalid': errorFor('to') }]"
+        />
+
+        <v-errors :errors="errorFor('to')"></v-errors>
+
+      </div>
     </div>
+    <button
+      class="btn btn-secondary btn-block"
+      v-on:click="check"
+      v-on:keyup.enter="check"
+      :disabled="loading"
+    >
+      Check
+    </button>
+  </div>
 </template>
 
 <script>
+import { is422 } from "./../shared/utils/response";
+import validationErrors from "./../shared/mixins/validationErrors";
+
 export default {
-    props:{
-        bookableId: String
-    },
-    data(){
-        return{
-            from: null,
-            to: null,
-            loading: false,
-            status: null,
-            errors: null
-        }
-    },
-    methods: {
-        check(){
-                this.loading = true;
-                this.errors = null;
+  mixins:[ validationErrors ],
 
-                axios.get(
-                `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
-                ).then(response => {
-                    this.status = response.status;
-                }).catch(error => {
-                    if (422 === error.response.status) {
-                        this.errors = error.response.data.errors;
-                    }
-                    this.status = error.response.status;
-                }).then(() => (this.loading = false));
-        },
-        errorFor(field){
-            return this.hasErrosrs && this.errors[field] ? this.errors[field]:null;
-        }
-    },
+  props: {
+    bookableId: [String, Number],
+  },
 
-    computed: {
-        hasErrors() {
-            return 422 === this.status && this.errors !== null;
-        },
-        hasAvailability() {
-        return 200 === this.status;
-        },
-        noAvailability() {
-        return 400 === this.status;
-        }
-    }
+  data() {
+    return {
+      from: null,
+      to: null,
+      loading: false,
+      status: null,
+    };
+  },
+  methods: {
+    check() {
+      this.loading = true;
+      this.errors = null;
+
+      axios
+        .get(
+          `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
+        )
+        .then((response) => {
+          this.status = response.status;
+        })
+        .catch((error) => {
+          if (is422(error)) {
+            this.errors = error.response.data.errors;
+          }
+          this.status = error.response.status;
+        })
+        .then(() => (this.loading = false));
+    },
+  },
+
+  computed: {
+    hasErrors() {
+      return 422 === this.status && this.errors !== null;
+    },
+    hasAvailability() {
+      return 200 === this.status;
+    },
+    noAvailability() {
+      return 400 === this.status;
+    },
+  },
 };
 </script>
 
 <style scoped>
-    label{
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        color: gray;
-        font-weight: bolder;
-    }
+label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: gray;
+  font-weight: bolder;
+}
 </style>

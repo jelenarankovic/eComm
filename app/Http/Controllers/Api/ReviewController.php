@@ -10,26 +10,30 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    public function show($id){
+    public function show($id)
+    {
         return new ReviewResource(Review::findOrFail($id));
     }
 
     public function store(Request $request){
         $data = $request->validate([
-            'id' => 'required|size:36|unique:reviews',
+            'id' => 'required|size:36|unique:reviews', //36 je velicina uuid-a
             'content' => 'required|min:2',
-            'rating' => 'required|in:1,2,3,4,5'
+            'rating' => 'required|in:1,2,3,4,5' 
         ]);
+
         $booking = Booking::findByReviewKey($data['id']);
         if (null === $booking) {
-            return abort(404);
+            return abort(404); //ako nema bukinga sa ovim rev key-em
         }
         $booking->review_key = '';
         $booking->save();
         $review = Review::make($data);
+         
         $review->booking_id = $booking->id;
         $review->bookable_id = $booking->bookable_id;
         $review->save();
+        
         return new ReviewResource($review);
 
     }
