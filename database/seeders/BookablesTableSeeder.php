@@ -35,8 +35,9 @@ class BookablesTableSeeder extends Seeder
                 'description' => $faker->text(),
                 'created_at' => now(),
                 'updated_at' => now(),
+                'price' => random_int(15, 600)
             ]);
         }
-        // Bookable::factory(Bookable::class, 100)->create();
+         //Bookable::factory(Bookable::class, 100)->create();
     }
 }
