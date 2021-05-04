@@ -1973,7 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       this.errors = null;
-      this.$store.commit('setLastSearch', {
+      this.$store.dispatch('setLastSearch', {
         from: this.from,
         to: this.to
       });
@@ -2593,6 +2593,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_8__.default({
   store: store,
   components: {
     "index": _Index__WEBPACK_IMPORTED_MODULE_1__.default
+  },
+  beforeCreate: function beforeCreate() {
+    this.$store.dispatch("loadStoredState"); //ucitava state iz lokalnog storidza
   }
 });
 
@@ -2755,6 +2758,20 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {
     setLastSearch: function setLastSearch(state, payload) {
       state.lastSearch = payload;
+    }
+  },
+  actions: {
+    //okej ovo se koristi da bismo zapamtili datume i nakon sto se rifresuje stranica, i cuvaju se u lokal storidzu
+    setLastSearch: function setLastSearch(context, payload) {
+      context.commit('setLastSearch', payload);
+      localStorage.setItem('lastSearch', JSON.stringify(payload));
+    },
+    loadStoredState: function loadStoredState(context) {
+      var lastSearch = localStorage.getItem('lastSearch');
+
+      if (lastSearch) {
+        context.commit('setLastSearch', JSON.parse(lastSearch));
+      }
     }
   }
 });

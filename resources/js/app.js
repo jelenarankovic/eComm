@@ -42,5 +42,8 @@ const app = new Vue({
 
     components: {
         "index": Index
-    }
+    },
+    beforeCreate() {
+        this.$store.dispatch("loadStoredState"); //ucitava state iz lokalnog storidza
+    },
 });
