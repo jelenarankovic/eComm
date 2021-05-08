@@ -15,7 +15,18 @@
       <!--//ove bookable reviewu prosledjujemo id da bude atribut, tj parametar za bookableId -->
     </div>
     <div class="col-md-4 pb-4">
-      <availability :bookable-id="this.$route.params.id"></availability>
+      <availability :bookable-id="this.$route.params.id" @availability="checkPrice($event)" class="mb-4"></availability>
+
+     <transition name="fade">
+      <price-breakdown v-if="price" :price="price" class="mb-4"></price-breakdown>
+      </transition>
+
+      <transition name ="fade">  
+       <button class="btn btn-outline-secondary btn-block" v-if="price">Book now</button>
+      </transition>
+
+     
+     
     </div>
   </div>
 </template>
@@ -23,15 +34,19 @@
 <script>
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
+import PriceBreakdown from "./PriceBreakdown";
+import { mapState } from "vuex";
 export default {
   components: {
     Availability,
     ReviewList,
+    PriceBreakdown
   },
   data() {
     return {
       bookable: null,
       loading: false,
+      price:null,
     };
   },
   created() {
@@ -41,5 +56,22 @@ export default {
       this.loading = false;
     });
   },
-};
+  computed:mapState({//da ne bi izbacivao izuzetak kako u methods try-catch bloku nema odredjen datum from-to
+    lastSearch: "lastSearch"
+  }),
+  methods: {
+    async checkPrice(hasAvailability){
+      if(!hasAvailability){
+        this.price = null;
+        return;
+      }
+
+      try {
+        this.price = (await axios.get(`/api/bookables/${this.bookable.id}/price?from=${this.lastSearch.from}&to=${this.lastSearch.to}`)).data.data;
+      } catch (err) {
+        this.price = null;
+      }
+    }
+    }
+  };
 </script>
