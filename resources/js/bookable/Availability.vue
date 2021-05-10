@@ -63,7 +63,7 @@ export default {
   },
 
   methods: {//zamena za axious i iako je async citljivo je za one koji ne kodiraju async
-    async check() {
+     async check() {
       this.loading = true;
       this.errors = null;
       this.$store.dispatch("setLastSearch", {

@@ -82,7 +82,7 @@ export default {
   }
   },
   methods: {
-   async checkPrice(hasAvailability) {
+    async checkPrice(hasAvailability) {
       if (!hasAvailability) {
         this.price = null;
         return;
@@ -109,7 +109,7 @@ export default {
       this.$store.dispatch("removeFromBasket", this.bookable.id);
     }
   }
-  };
+};
 </script>
 
 <style scoped>
