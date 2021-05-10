@@ -62,31 +62,29 @@ export default {
     };
   },
 
-  methods: {
+  methods: {//zamena za axious i iako je async citljivo je za one koji ne kodiraju async
     async check() {
       this.loading = true;
       this.errors = null;
-
-       this.$store.dispatch('setLastSearch', {
+      this.$store.dispatch("setLastSearch", {
         from: this.from,
         to: this.to
       });
-
-      try{//zamena za axious blok
-        this.status = (await axios.get(`/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`)).status;
+      try {
+        this.status = (await axios.get(
+          `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
+        )).status;
         this.$emit("availability", this.hasAvailability);
-      }catch(err){
+      } catch (err) {
         if (is422(err)) {
-            this.errors = err.response.data.errors;
-          }
-          this.status = err.response.status;
-          this.$emit("availability", this.hasAvailability);
+          this.errors = err.response.data.errors;
+        }
+        this.status = err.response.status;
+        this.$emit("availability", this.hasAvailability);
       }
-
       this.loading = false;
-
     }
-  },
+  }, 
   computed: {
     hasErrors() {
       return 422 === this.status && this.errors !== null;
