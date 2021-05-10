@@ -97,15 +97,16 @@ export default {
         this.price = null;
       }
     },
-    addToBasket(){
-      this.$store.commit("addToBasket",{
+    addToBasket(){//posto smo uradili cuvanje na LocalStorage-u, korissti se dispatch a ne commit
+    //commit je za komitovanje mutacija, a dispatch je za dispacovanje akcija
+      this.$store.dispatch("addToBasket",{
         bookable:this.bookable,
         price:this.price,
         dates:this.lastSearch
       });
     },
     removeFromBasket(){
-      this.$store.commit("removeFromBasket", this.bookable.id);
+      this.$store.dispatch("removeFromBasket", this.bookable.id);
     }
   }
   };

@@ -4,7 +4,7 @@
       <router-link class="navbar-brand mr-auto" :to="{ name: 'home' }"
         >LaravelBnb</router-link
       >
-      <router-link class="btn nav-btn" :to="{ name: 'home' }">Basket
+      <router-link class="btn nav-btn" :to="{ name: 'basket' }">Basket
         <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
       </router-link>
     </nav>
