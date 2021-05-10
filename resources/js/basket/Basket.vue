@@ -4,26 +4,18 @@
             <div class="col-md-8">
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="first_names">First names</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="first_names"
-                        />
+                        <label for="first_name">First name</label>
+                        <input type="text" class="form-control" name="first_name"/>
                     </div>
-                    <div class="col-md-6 form-group">
+                     <div class="col-md-6 form-group">
                         <label for="last_name">Last name</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="last_name"
-                        />
+                        <input type="text" class="form-control" name="last_name"/>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12 form-group">
+                     <div class="col-md-12 form-group">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" />
+                        <input type="text" class="form-control" name="email"/>
                     </div>
                 </div>
                 <div class="row">
