@@ -20,6 +20,10 @@ Route::apiResource('bookables', 'App\Http\Controllers\Api\BookableController')
     ->only(['index','show']);
 //resource controllers - upravlja kontrolerom? idk pogledaj video
 
+
+
+
+
 Route::get('bookables/{bookable}/availability', 'App\Http\Controllers\Api\BookableAvailabilityController')
     ->name('bookables.availability.show');
 
@@ -34,4 +38,8 @@ Route::get('/booking-by-review/{reviewKey}', 'App\Http\Controllers\Api\BookingBy
 
 Route::get('bookables/{bookable}/price', 'App\Http\Controllers\Api\BookablePriceController')
     ->name('bookables.price.show');
+
+
+Route::post('checkout', 'App\Http\Controllers\Api\CheckoutController')
+    ->name('checkout');
 
