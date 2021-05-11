@@ -14,7 +14,7 @@ class AddPriceAndAddressToBookingsTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->unsignedInteger('price');
+            $table->unsignedInteger('price')->nullable();
 
             $table->unsignedBigInteger('address_id')->index()->nullable();
             $table->foreign('address_id')->references('id')->on('addresses');
