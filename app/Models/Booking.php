@@ -21,7 +21,11 @@ class Booking extends Model
     public function review(){
         return $this->HasOne(Review::class); //jedan booking moze da ima jedan rivju
     }
-
+    
+    public function address(){
+        return $this->belongsTo(Address::class);
+    }
+    
     public function scopeBetweenDates(Builder $query, $from, $to){
         return $query->where('to', '>=', $from)
             ->where('from', '<=', $to);  //ovako smo sigurni da se reyervisanja ne preklapaju
