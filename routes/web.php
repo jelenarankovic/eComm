@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,11 +11,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+Auth::routes();
+
+Route::middleware('auth')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::get('/{any?}', function () {
-    // '/{any?}' ovo je dodavanje parametra
-    //fallback route
-    //ovime prebacujemo na vue trazenje ruta sa laravela
-    //where('any','^(?!api\/)[\/w\.-]*');
-    //znaci da nece da pronadje rute koje krecu sa api
     return view('welcome');
-}) -> where('any','^(?!api\/)[\/\w\.-]*');
+})->where('any', '^(?!api\/)[\/\w\.-]*');

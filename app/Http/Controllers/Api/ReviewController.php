@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
-use App\Models\Booking;
-use App\Models\Review;
+use App\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -15,26 +15,28 @@ class ReviewController extends Controller
         return new ReviewResource(Review::findOrFail($id));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->validate([
-            'id' => 'required|size:36|unique:reviews', //36 je velicina uuid-a
+            'id' => 'required|size:36|unique:reviews',
             'content' => 'required|min:2',
-            'rating' => 'required|in:1,2,3,4,5' 
+            'rating' => 'required|in:1,2,3,4,5'
         ]);
 
         $booking = Booking::findByReviewKey($data['id']);
+
         if (null === $booking) {
-            return abort(404); //ako nema bukinga sa ovim rev key-em
+            return abort(404);
         }
+
         $booking->review_key = '';
         $booking->save();
+
         $review = Review::make($data);
-         
         $review->booking_id = $booking->id;
         $review->bookable_id = $booking->bookable_id;
         $review->save();
-        
-        return new ReviewResource($review);
 
+        return new ReviewResource($review);
     }
 }

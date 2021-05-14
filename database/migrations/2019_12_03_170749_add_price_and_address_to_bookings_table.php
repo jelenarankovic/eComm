@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddReviewKeyToBookingsTable extends Migration
+class AddPriceAndAddressToBookingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,10 @@ class AddReviewKeyToBookingsTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-           $table->uuid('review_key');
+            $table->unsignedInteger('price');
+
+            $table->unsignedBigInteger('address_id')->index()->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses');
         });
     }
 
@@ -26,7 +29,10 @@ class AddReviewKeyToBookingsTable extends Migration
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('review_key');
+            $table->dropColumn('price');
+
+            $table->dropForeign(['address_id']);
+            $table->dropColumn('address_id');
         });
     }
 }

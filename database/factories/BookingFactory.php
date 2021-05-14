@@ -1,36 +1,18 @@
 <?php
 
-namespace Database\Factories;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Booking;
-use Carbon\Carbon; // date-time library
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Faker\Factory as Faker;
+use App\Booking;
+use Faker\Generator as Faker;
+use Carbon\Carbon;
 
-class BookingFactory extends Factory
-{
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Booking::class;
+$factory->define(Booking::class, function (Faker $faker) {
+    $from = Carbon::instance($faker->dateTimeBetween('-1 months', '+1 months'));
+    $to = (clone $from)->addDays(random_int(0, 14));
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
-    {
-        $faker = Faker::create();
-        $from = Carbon::instance($faker->dateTimeBetween('-1 months', '+1 months')); //generise radnom datum od mesec pre i mesec posel
-        $to = (clone $from)->addDays(random_int(0, 14)); // najkrace ostaje 1 dan a najduze 15 dana
-
-        return [
-            'from' => $from,
-            'to' => $to,
-            'price'=> random_int(200, 5000)
-        ];
-    }
-}
+    return [
+        'from' => $from,
+        'to' => $to,
+        'price' => random_int(200, 5000)
+    ];
+});

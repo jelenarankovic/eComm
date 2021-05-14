@@ -15,8 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        Schema::defaultStringLength(191);
-        //JsonResource::withoutWrapping();
+        //
     }
 
     /**
@@ -27,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        //ovo podesava duzinu stringa u okviru tabele na max 191
+        // JsonResource::withoutWrapping();
     }
 }

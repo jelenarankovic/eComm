@@ -1,30 +1,15 @@
 <?php
 
-namespace Database\Factories;
-use App\Models\Review;
-use Illuminate\Database\Eloquent\Factories\Factory;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Review;
+use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use Faker\Factory as Faker;
-class ReviewFactory extends Factory
-{
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Review::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
-    public function definition()
-    {
-        // $faker = Faker::create();
-        return [
-            'id' => Str::uuid(),
-            'content' => $this->faker->sentences(5, true),
-            'rating' => random_int(1, 5)
-        ];
-    }
-}
+
+$factory->define(Review::class, function (Faker $faker) {
+    return [
+        'id' => Str::uuid(),
+        'content' => $faker->sentences(5, true),
+        'rating' => random_int(1, 5)
+    ];
+});

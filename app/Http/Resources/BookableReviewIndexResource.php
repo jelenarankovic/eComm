@@ -17,7 +17,7 @@ class BookableReviewIndexResource extends JsonResource
         return [
             'created_at' => $this->created_at,
             'rating' => $this->rating,
-            'content' => $this->content,
+            'content' => $this->content
         ];
     }
 }

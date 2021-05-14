@@ -14,15 +14,14 @@ class CreateBookingsTable extends Migration
     public function up()
     {
         Schema::create('bookings', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
 
             $table->date('from');
             $table->date('to');
 
             $table->unsignedBigInteger('bookable_id')->index();
-            $table->foreign('bookable_id')->references('id')->on('bookables'); //ovo je uspostavilo one to many vezu izmedju bookinga i bookable objekta
-
+            $table->foreign('bookable_id')->references('id')->on('bookables');
         });
     }
 

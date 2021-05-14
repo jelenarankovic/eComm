@@ -8,15 +8,10 @@
           v-for="(bookable, column) in bookablesInRow(row)"
           :key="'row' + row + column"
         >
-          <bookable-list-item
-            v-bind="bookable"
-          ></bookable-list-item>
+          <bookable-list-item v-bind="bookable"></bookable-list-item>
         </div>
-        <div
-          class="col"
-          v-for="p in placeholdersInRow(row)"
-          :key="'placeholder' + row + p"
-        ></div>
+
+        <div class="col" v-for="p in placeholdersInRow(row)" :key="'placeholder' + row + p"></div>
       </div>
     </div>
   </div>
@@ -27,43 +22,37 @@ import BookableListItem from "./BookableListItem";
 
 export default {
   components: {
-    BookableListItem,
+    BookableListItem
   },
-
   data() {
     return {
       bookables: null,
       loading: false,
-      columns: 3,
+      columns: 3
     };
   },
-
   computed: {
     rows() {
-      return this.bookables == null
+      return this.bookables === null
         ? 0
         : Math.ceil(this.bookables.length / this.columns);
-    },
+    }
   },
-
   methods: {
     bookablesInRow(row) {
       return this.bookables.slice((row - 1) * this.columns, row * this.columns);
     },
     placeholdersInRow(row) {
       return this.columns - this.bookablesInRow(row).length;
-      //racuna koliko placeholder elemenata treba da postavi u poslednji red kad nije pun
-    },
+    }
   },
-
   created() {
     this.loading = true;
 
-    const request = axios.get("/api/bookables").then((response) => {
-      this.bookables = response.data.data; //prvo data je od axiosa, drugo json data property
+    const request = axios.get("/api/bookables").then(response => {
+      this.bookables = response.data.data;
       this.loading = false;
     });
-
-  },
+  }
 };
 </script>

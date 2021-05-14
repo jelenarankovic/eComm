@@ -14,8 +14,6 @@ class BookingByReviewBookableShowResource extends JsonResource
      */
     public function toArray($request)
     {
-        //ovu klasu koristimo za serijalizaciju bookable kada hocemo da je dobijemo u 
-        //BookingByReviewShowResource
         return [
             'bookable_id' => $this->id,
             'title' => $this->title,
