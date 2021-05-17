@@ -78,7 +78,12 @@ export default {
 
         logIn();
         this.$store.dispatch("loadUser");
-        this.$router.push({ name: "home" });
+        if(this.email == "admin@admin.com"){
+          // return route('checkout');
+          this.$router.push({ name: "basket" });
+        }else{
+          this.$router.push({ name: "home" });
+        }
       } catch (error) {
         this.errors = error.response && error.response.data.errors;
       }

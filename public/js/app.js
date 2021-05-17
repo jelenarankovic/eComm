@@ -2128,9 +2128,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 7:
                 Object(_shared_utils_auth__WEBPACK_IMPORTED_MODULE_2__["logIn"])();
                 this.$store.dispatch("loadUser");
-                this.$router.push({
-                  name: "home"
-                });
+
+                if (this.email == "admin@admin.com") {
+                  // return route('checkout');
+                  this.$router.push({
+                    name: "basket"
+                  });
+                } else {
+                  this.$router.push({
+                    name: "home"
+                  });
+                }
+
                 _context.next = 15;
                 break;
 
