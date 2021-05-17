@@ -34,7 +34,13 @@ const routes = [
         path: "/auth/register",
         component: require("./auth/Register").default,
         name: "register"
-    }
+    },
+    {
+        path: "/admin/home",
+        component: require("./admin/AdminHome").default,
+        name: "admin"
+    },
+
 ];
 
 const router = new VueRouter({

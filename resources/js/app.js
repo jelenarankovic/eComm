@@ -10,10 +10,15 @@ import StarRating from "./shared/components/StarRating";
 import Success from "./shared/components/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
 import storeDefinition from "./store";
+import vuetify from './vuetify'
+import DataTable from 'laravel-vue-datatable';
+
 
 window.Vue = require("vue");
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(DataTable);
+
 
 Vue.filter("fromNow", value => moment(value).fromNow());
 
@@ -41,6 +46,7 @@ const app = new Vue({
     el: "#app",
     router,
     store,
+    vuetify,
     components: {
         index: Index
     },

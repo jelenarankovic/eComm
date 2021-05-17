@@ -8,6 +8,7 @@ use App\Bookable;
 use App\Http\Resources\BookableIndexResource;
 use App\Http\Resources\BookableShowResource;
 
+
 class BookableController extends Controller
 {
     public function index()
@@ -21,4 +22,18 @@ class BookableController extends Controller
     {
         return new BookableShowResource(Bookable::findOrFail($id));
     }
+
+   // public function index1(Request $request)
+    // {   
+    //     $length = $request->input('length');
+    //     $sortBy = $request->input('column');
+    //     $orderBy = $request->input('dir');
+    //     $searchValue = $request->input('search');
+        
+    //     $query = Bookable::eloquentQuery($sortBy, $orderBy, $searchValue);
+
+    //     $data = $query->paginate($length);
+        
+    //     return new DataTableCollectionResource($data);
+    // }
 }

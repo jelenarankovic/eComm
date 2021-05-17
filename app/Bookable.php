@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use JamesDordoy\LaravelVueDatatable\Traits\LaravelVueDatatableTrait;
+
 
 class Bookable extends Model
 {
@@ -34,4 +36,19 @@ class Bookable extends Model
             ]
         ];
     }
+
+    protected $dataTableColumns = [
+        'id' => [
+            'search_term' => false,
+        ],
+        'title' => [
+            'search_term' => true,
+        ],
+        'description' => [
+            'search_term' => true,
+        ],
+        'price' => [
+            'search_term' => true,
+        ]
+    ];
 }

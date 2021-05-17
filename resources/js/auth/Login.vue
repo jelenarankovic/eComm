@@ -80,7 +80,7 @@ export default {
         this.$store.dispatch("loadUser");
         if(this.email == "admin@admin.com"){
           // return route('checkout');
-          this.$router.push({ name: "basket" });
+          this.$router.push({ name: "admin" });
         }else{
           this.$router.push({ name: "home" });
         }

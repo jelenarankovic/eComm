@@ -1,5 +1,6 @@
 <template>
   <div>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <nav class="navbar navbar-expand-lg bg-white border-bottom navbar-light">
       <router-link class="navbar-brand mr-auto" :to="{name: 'home'}">LaravelBnb</router-link>
 
