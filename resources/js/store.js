@@ -76,6 +76,7 @@ export default {
         },
         logout({ commit }) {
             commit("setUser", {});
+            // commit("setBasket", {});
             commit("setLoggedIn", false);
             logOut();
         }

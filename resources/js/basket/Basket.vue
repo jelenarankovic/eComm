@@ -195,6 +195,7 @@ export default {
       this.errors = null;
 
       try {
+        console.log(this.customer)
         await axios.post(`/api/checkout`, {
           customer: this.customer,
           bookings: this.basket.map(basketItem => ({
