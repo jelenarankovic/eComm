@@ -58,7 +58,6 @@
 <script>
 import { is404, is422 } from "./../shared/utils/response";
 import validationErrors from "./../shared/mixins/validationErrors";
-
 export default {
   mixins: [validationErrors],
   data() {
@@ -79,7 +78,6 @@ export default {
   async created() {
     this.review.id = this.$route.params.id;
     this.loading = true;
-
     try {
       this.existingReview = (await axios.get(
         `/api/reviews/${this.review.id}`
@@ -97,7 +95,6 @@ export default {
         this.error = true;
       }
     }
-
     this.loading = false;
   },
   computed: {
@@ -123,7 +120,6 @@ export default {
       this.errors = null;
       this.sending = true;
       this.success = false;
-
       axios
         .post(`/api/reviews`, this.review)
         .then(response => {
@@ -132,13 +128,11 @@ export default {
         .catch(err => {
           if (is422(err)) {
             const errors = err.response.data.errors;
-
             if (errors["content"] && 1 === _.size(errors)) {
               this.errors = errors;
               return;
             }
           }
-
           this.error = true;
         })
         .then(() => (this.sending = false));
@@ -146,4 +140,3 @@ export default {
   }
 };
 </script>
-

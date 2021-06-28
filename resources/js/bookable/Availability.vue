@@ -44,9 +44,6 @@
         <i class="fas fa-circle-notch fa-spin"></i> Checking...
       </span>
     </button>
-    <button class="btn btn-secondary btn-block" @click="leaveReview">
-      <span >Leave a review</span>
-    </button>
   </div>
 </template>
 
@@ -69,32 +66,6 @@ export default {
   },
   methods: {
     async check() {
-      this.loading = true;
-      this.errors = null;
-
-      this.$store.dispatch("setLastSearch", {
-        from: this.from,
-        to: this.to
-      });
-
-      try {
-        this.status = (await axios.get(
-          `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
-        )).status;
-        this.$emit("availability", this.hasAvailability);
-      } catch (err) {
-        if (is422(err)) {
-          this.errors = err.response.data.errors;
-        }
-
-        this.status = err.response.status;
-        this.$emit("availability", this.hasAvailability);
-      }
-
-      this.loading = false;
-    },
-    
-    async leaveReview() {
       this.loading = true;
       this.errors = null;
 

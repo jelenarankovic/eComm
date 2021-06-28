@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
 use App\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -39,4 +40,20 @@ class ReviewController extends Controller
 
         return new ReviewResource($review);
     }
+
+    public function getReviewSQL($id)
+    {
+        $review = DB::table('users')
+        ->join('addresses', 'users.id', '=', 'addresses.user_id')
+        ->join('bookings', 'bookings.address_id', '=', 'addresses.id')
+        ->join('reviews', 'reviews.id', '=', 'bookings.reviews_key')
+        ->select('reviews.id')
+        ->where('users.id', '=', $id)
+        ->get();
+
+        return $review;
+    }
+
+ 
+  
 }

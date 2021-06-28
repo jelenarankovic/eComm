@@ -24,7 +24,8 @@ class CheckoutController extends Controller
             'customer.email' => 'required|email',
             'customer.country' => 'required|min:2',
             'customer.state' => 'required|min:2',
-            'customer.zip' => 'required|min:2'
+            'customer.zip' => 'required|min:2',
+            'customer.user_id' => 'required|min:1',
         ]);
         $data = array_merge($data, $request->validate([
             'bookings.*' => ['required', function ($attribute, $value, $fail) {

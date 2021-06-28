@@ -175,7 +175,8 @@ export default {
         city: null,
         country: null,
         state: null,
-        zip: null
+        zip: null,
+        user_id: this.$store.state.user.id
       }
     };
   },

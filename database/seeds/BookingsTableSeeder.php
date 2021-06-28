@@ -13,6 +13,7 @@ class BookingsTableSeeder extends Seeder
      */
     public function run()
     {
+       
         Bookable::all()->each(function (Bookable $bookable) {
             $booking = factory(Booking::class)->make();
             $bookings = collect([$booking]);
